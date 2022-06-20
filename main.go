@@ -1,11 +1,12 @@
 package main
 
 import (
-	"log"
 	"fmt"
-	"github.com/gin-gonic/gin"
 	routes "go-Mongodb/routes"
+	"log"
 	"os"
+
+	"github.com/gin-gonic/gin"
 	"github.com/joho/godotenv"
 )
 
@@ -14,8 +15,8 @@ func CORSMiddleware() gin.HandlerFunc {
 
 		c.Header("Access-Control-Allow-Origin", "*")
 		c.Header("Access-Control-Allow-Credentials", "true")
-		c.Header("Access-Control-Allow-Headers", "Content-Type, Content-Length, Accept-Encoding, X-CSRF-Token, Authorization, accept, origin, Cache-Control, X-Requested-With")
-		c.Header("Access-Control-Allow-Methods", "POST,HEAD,PATCH, OPTIONS, GET, PUT")
+		c.Header("Access-Control-Allow-Headers", "*,Content-Type, Content-Length, Accept-Encoding, X-CSRF-Token, Authorization, accept, origin, Cache-Control, X-Requested-With")
+		c.Header("Access-Control-Allow-Methods", "POST,HEAD,PATCH, OPTIONS, GET, PUT,*")
 
 		if c.Request.Method == "OPTIONS" {
 			c.AbortWithStatus(204)
@@ -44,17 +45,10 @@ func main() {
 	router.Use(gin.Logger())
 
 	router.Use(CORSMiddleware())
+	router.SetTrustedProxies([]string{"192.168.43.142"})
 
 	routes.AuthRoutes(router)
 	routes.UserRoutes(router)
-
-	router.GET("api-1", func(c *gin.Context) {
-		c.JSON(200, gin.H{"success": "Access granted for api-1"})
-	})
-
-	router.GET("api-2", func(c *gin.Context) {
-		c.JSON(200, gin.H{"success": "Access granted for api-2"})
-	})
-
+	
 	router.Run(":" + port)
 }

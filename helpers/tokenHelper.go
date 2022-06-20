@@ -69,13 +69,13 @@ func ValidateToken(signedToken string) (claims *SignedDetails, msg string) {
 	}
 	claims, ok := token.Claims.(*SignedDetails)
 	if !ok {
-		msg = fmt.Sprintf("the token is invalid")
+		msg = fmt.Sprintf("the token is invalid !!!")
 		msg = err.Error()
 		return
 	}
 
 	if claims.ExpiresAt < time.Now().Unix() {
-		msg = fmt.Sprintf("token is expired")
+		msg = fmt.Sprintf("token is expired !!!")
 		msg = err.Error()
 		return
 	}
