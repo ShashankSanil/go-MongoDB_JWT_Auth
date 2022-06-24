@@ -28,10 +28,18 @@ func DBinstance() *mongo.Client {
 
 	ctx, cancel := context.WithTimeout(context.Background(), 10*time.Second)
 	defer cancel()
+	
 	err = client.Connect(ctx)
 	if err != nil {
 		log.Fatal(err)
 	}
+	
+	err := client.Ping(context.TODO(), nil)
+	if err!= nil{
+		log.Fatal("Failed to connect MongoDB :(")
+		return nil
+	}
+		
 	fmt.Println("Connected to MongoDB!!!")
 
 	return client
