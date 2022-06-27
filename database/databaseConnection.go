@@ -28,6 +28,7 @@ func DBinstance() *mongo.Client {
 
 	ctx, cancel := context.WithTimeout(context.Background(), 10*time.Second)
 	defer cancel()
+
 	err = client.Connect(ctx)
 	if err != nil {
 		log.Fatal(err)
@@ -37,6 +38,7 @@ func DBinstance() *mongo.Client {
 	if err != nil {
 		log.Fatal("Failed to connect MongoDb :(")
 	}
+
 	fmt.Println("Connected to MongoDB!!!")
 
 	return client
