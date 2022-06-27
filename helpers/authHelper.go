@@ -10,7 +10,7 @@ func CheckUserType(c *gin.Context, role string) (err error) {
 	err = nil
 
 	if userType != role {
-		err = errors.New("Unauthorized access this resources")
+		err = errors.New("Unauthorized access this resources !!!")
 		return err
 	}
 	return err
@@ -22,9 +22,10 @@ func MatchUserTypeToUid(c *gin.Context, userId string) (err error) {
 	err = nil
 
 	if userType == "USER" && uid != userId {
-		err = errors.New("Unauthorizedo access this resources !!!")
+		err = errors.New("Unauthorized access this resources !!!")
 		return err
 	}
 	err = CheckUserType(c, userType)
 	return err
 }
+
