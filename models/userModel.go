@@ -17,3 +17,9 @@ type User struct {
 	Created_at    time.Time          `json:"created_at"`
 	Updated_at    time.Time          `json:"updated_at"`
 }
+
+type UserResponse struct {
+	Status  int                    `json:"status"`
+	Message string                 `json:"_msg"`
+	Data    map[string]interface{} `json:"data"`
+}

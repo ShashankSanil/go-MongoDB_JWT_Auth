@@ -1,24 +1,27 @@
 package middleware
 
-import(
-	"fmt"
-	"net/http"
-	helper "go-Mongodb/helpers"
+import (
+	//"fmt"
 	"github.com/gin-gonic/gin"
+	helper "go-Mongodb/helpers"
+	"go-Mongodb/models"
+	"net/http"
 )
 
-func Authenticate() gin.HandlerFunc{
+func Authenticate() gin.HandlerFunc {
 	return func(c *gin.Context) {
 		clientToken := c.Request.Header.Get("token")
-		if clientToken == ""{
-			c.JSON(http.StatusInternalServerError, gin.H{"error":fmt.Sprintf("No Authorization header provided !!!")})
+		if clientToken == "" {
+			//c.JSON(http.StatusInternalServerError, gin.H{"error":fmt.Sprintf("No Authorization header provided !!!")})
+			c.JSON(http.StatusInternalServerError, models.UserResponse{Status: http.StatusInternalServerError, Message: "No Authorization header provided !!!", Data: map[string]interface{}{"_data": nil}})
 			c.Abort()
 			return
 		}
 
 		claims, err := helper.ValidateToken(clientToken)
-		if err!=""{
-			c.JSON(http.StatusInternalServerError, gin.H{"error":err})
+		if err != "" {
+			//	c.JSON(http.StatusInternalServerError, gin.H{"error":err})
+			c.JSON(http.StatusInternalServerError, models.UserResponse{Status: http.StatusInternalServerError, Message: err, Data: map[string]interface{}{"_data": nil}})
 			c.Abort()
 			return
 		}
